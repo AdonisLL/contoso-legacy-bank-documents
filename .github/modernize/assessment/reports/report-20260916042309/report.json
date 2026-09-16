@@ -1,0 +1,243 @@
+{
+  "version": "1.0.0",
+  "producer": ".NET AppCAT CLI",
+  "metadata": {
+    "analysisStartTime": "2026-09-16T04:23:09.9554427Z",
+    "analysisEndTime": "2026-09-16T04:23:11.1729958Z",
+    "privacyMode": "Restricted",
+    "privacyModeHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2271074",
+    "targetIds": [
+      "AppService.Windows",
+      "AppService.Linux",
+      "AKS.Linux",
+      "AKS.Windows",
+      "ACA",
+      "AppServiceContainer.Linux",
+      "AppServiceContainer.Windows",
+      "AppServiceManagedInstance.Windows"
+    ],
+    "targetDisplayNames": [
+      "Azure App Service (Windows)",
+      "Azure App Service (Linux)",
+      "Azure Kubernetes Service (Linux)",
+      "Azure Kubernetes Service (Windows)",
+      "Azure Container Apps",
+      "Azure App Service Container (Linux)",
+      "Azure App Service Container (Windows)",
+      "Azure App Service Managed Instance (Windows)"
+    ],
+    "os": [
+      "windows",
+      "linux"
+    ]
+  },
+  "summary": {
+    "totalProjects": 2,
+    "totalIssues": 2,
+    "totalIncidents": 2,
+    "totalEffort": 6,
+    "charts": {
+      "severity": {
+        "mandatory": 0,
+        "optional": 2,
+        "potential": 0,
+        "information": 0
+      },
+      "category": {
+        "Security": 2
+      }
+    }
+  },
+  "projects": [
+    {
+      "path": "src/Contoso.LegacyBank.Documents/Contoso.LegacyBank.Documents.csproj",
+      "issues": 1,
+      "storyPoints": 3,
+      "properties": {
+        "appName": "Contoso.LegacyBank.Documents",
+        "frameworks": [
+          ".NETFramework,Version=v4.8"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ]
+      },
+      "incidents": [
+        {
+          "ruleId": "Security.0002",
+          "incidentId": "b42c5c9f-ea0b-4a6d-b474-77852bdb89f5",
+          "location": "src/Contoso.LegacyBank.Documents/App.config",
+          "locationKind": "File",
+          "targets": {
+            "AppService.Windows": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AppService.Linux": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AKS.Linux": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AKS.Windows": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "ACA": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AppServiceContainer.Linux": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AppServiceContainer.Windows": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AppServiceManagedInstance.Windows": {
+              "severity": "optional",
+              "effort": 3
+            }
+          },
+          "labels": []
+        }
+      ]
+    },
+    {
+      "path": "tests/Contoso.LegacyBank.Documents.Tests/Contoso.LegacyBank.Documents.Tests.csproj",
+      "issues": 1,
+      "storyPoints": 3,
+      "properties": {
+        "appName": "Contoso.LegacyBank.Documents.Tests",
+        "frameworks": [
+          ".NETFramework,Version=v4.8"
+        ],
+        "languages": [
+          "C#"
+        ],
+        "tools": [
+          "MSBuild"
+        ]
+      },
+      "incidents": [
+        {
+          "ruleId": "Security.0003",
+          "incidentId": "f0feb5ba-4886-42c9-99ae-fdfec41c9a9c",
+          "location": "tests/Contoso.LegacyBank.Documents.Tests/DocumentWorkerTests.cs",
+          "locationKind": "File",
+          "line": 19,
+          "column": 82,
+          "targets": {
+            "AppService.Windows": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AppService.Linux": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AKS.Linux": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AKS.Windows": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "ACA": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AppServiceContainer.Linux": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AppServiceContainer.Windows": {
+              "severity": "optional",
+              "effort": 3
+            },
+            "AppServiceManagedInstance.Windows": {
+              "severity": "mandatory",
+              "effort": 3
+            }
+          },
+          "labels": []
+        }
+      ]
+    }
+  ],
+  "rules": {
+    "Security.0002": {
+      "id": "Security.0002",
+      "description": "Connection strings without configuration builders detected.  \n\n Keeping connection strings directly in the app is not the best practice and might introduce security risks, increased maintenance, scalability challenges or compliance standards (such as PCI DSS, GDPR, etc.). \n\n Instead, it is recommended to use configuration builders to get secrets from secure sources in Azure environment.",
+      "title": "Connection strings without configuration builders detected",
+      "severity": "optional",
+      "effort": 3,
+      "links": [
+        {
+          "title": "Configuration builders",
+          "url": "https://go.microsoft.com/fwlink/?LinkID=2250915"
+        },
+        {
+          "title": "Storing application secrets",
+          "url": "https://go.microsoft.com/fwlink/?LinkID=2250916"
+        },
+        {
+          "title": "Centralized app configuration and security",
+          "url": "https://go.microsoft.com/fwlink/?LinkID=2250733"
+        }
+      ],
+      "labels": []
+    },
+    "Security.0003": {
+      "id": "Security.0003",
+      "description": "Hardcoded sensitive data detected.\n\nIf you are targeting Managed Instance on Azure App Service, externalize secrets to Key Vault/App Configuration; use managed identity instead of passwords or embedded connection strings.\n\nWhile if targeting other Azure compute services:\n\nAvoid placing sensitive data such as passwords, ids, tokens etc., directly in config files and code since it compromises the security of your application.\n\nUse Azure App Configuration or Azure KeyVault to store secrets.",
+      "title": "Hardcoded sensitive data detected",
+      "severity": "optional",
+      "effort": 3,
+      "links": [
+        {
+          "title": "Centralized app configuration and security",
+          "url": "https://go.microsoft.com/fwlink/?LinkID=2250733"
+        }
+      ],
+      "labels": []
+    }
+  },
+  "security": [
+    {
+      "id": "CWE-606",
+      "title": "Unchecked Input for Loop Condition",
+      "category": "Code Quality",
+      "severity": "potential",
+      "description": "The product does not properly check inputs that are used for loop conditions, potentially leading to a denial of service or other consequences because of excessive looping.",
+      "evidence": {
+        "files": [
+          "src/Contoso.LegacyBank.Documents/Processing/PdfStatementGenerator.cs:47"
+        ],
+        "explanation": "PdfStatementGenerator.Generate iterates over the externally supplied job.Transactions collection without enforcing a maximum transaction count, so a crafted job can cause excessive PDF rendering work."
+      },
+      "storyPoint": 3
+    },
+    {
+      "id": "CWE-772",
+      "title": "Missing Release of Resource after Effective Lifetime",
+      "category": "Code Quality",
+      "severity": "potential",
+      "description": "The product does not release a resource after its effective lifetime has ended, i.e., after the resource is no longer needed.",
+      "evidence": {
+        "files": [
+          "src/Contoso.LegacyBank.Documents/Processing/PdfStatementGenerator.cs:17"
+        ],
+        "explanation": "PdfStatementGenerator.Generate creates a PdfDocument but closes it only on the normal path at line 76; exceptions during rendering or saving bypass resource release."
+      },
+      "storyPoint": 3
+    }
+  ]
+}
