@@ -635,7 +635,7 @@ function clearAllFilters() {
 
 function onTargetChange(targetId) {
   _currentTarget = targetId;
-  var rows = document.querySelectorAll('.issue-row[data-targets]');
+  var rows = document.querySelectorAll('.issue-row');
   var totalEffort = 0;
   var domainCrits = {};
 
@@ -675,20 +675,6 @@ function onTargetChange(targetId) {
 
     if (!domainCrits[domain]) domainCrits[domain] = {mandatory:0,potential:0,optional:0};
     domainCrits[domain][newSeverity] = (domainCrits[domain][newSeverity] || 0) + 1;
-  }
-
-  var secSection = document.querySelector('.issue-section[data-domain="security"]');
-  if (secSection) {
-    var secRows = secSection.querySelectorAll('.issue-row');
-    for (var j = 0; j < secRows.length; j++) {
-      if (!secRows[j].hasAttribute('data-targets') || secRows[j].getAttribute('data-targets') === '') {
-        var sp = parseFloat(secRows[j].querySelector('.sp-cell').textContent) || 0;
-        totalEffort += sp;
-        if (!domainCrits['security']) domainCrits['security'] = {mandatory:0,potential:0,optional:0};
-        var sc = secRows[j].getAttribute('data-criticality') || 'optional';
-        domainCrits['security'][sc] = (domainCrits['security'][sc] || 0) + 1;
-      }
-    }
   }
 
   var label = totalEffort < 20 ? 'S' : totalEffort < 50 ? 'M' : totalEffort < 100 ? 'L' : 'XL';
