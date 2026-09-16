@@ -6,6 +6,7 @@
 |--------|-------|
 | Total Issues | 4 |
 | Mandatory Blockers | 0 |
+| Optional Issues | 2 |
 | Potential Issues | 2 |
 
 ## Component Information
